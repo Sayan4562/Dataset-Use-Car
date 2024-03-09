@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+    /* border-style:solid ; */
+    block-size: auto;
+    /* border: 20px; */
+}
+.bg_dark{
+    background-color: antiquewhite;
+}
+
+.mt_50{
+    margin-top: 50px;
+}

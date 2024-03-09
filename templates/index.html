@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Use Car Price Prediction</title>
+    <link href="static/css/style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+
+  <body class="bg_dark">
+    <div class="container">
+      <div class="row">
+        <div class="card mt_50" style="width: 100% ; hight:100% ;">
+
+          <div class="card-header">
+            <div class="col-12" style="text-align: center;">
+              <h1>Wlcome To Class price Pradicter</h1>
+
+            </div>
+          </div>
+          <div class="card-body">           
+            <form method="post"  accept-charset="utf-8">
+
+              
+              <div class="col-12 from-group" style="text-align: center;">
+                <label><b>select  Car name</b></label>
+                <select class="selectpicker from-control" id="name" name="name" required="1">
+                  {% for nam in name %}
+                  <option value="{{nam}}">{{nam}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-10 from-group" style="text-align: center;">
+                <label><b>select  Register Year</b></label>
+                <select class="selectpicker from-control" id="year" name="year" required="1">
+                  {% for y in year %}
+                  <option value="{{y}}">{{y}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-10 from-group" style="text-align: center;">
+                <label><b>select  insurnce</b></label>
+                <select class="selectpicker from-control" id="insurnce" name="insurnce" required="1">
+                  {% for y in insurnce %}
+                  <option value="{{y}}">{{y}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-10 from-group" style="text-align: center;">
+                <label><b>select  fule</b></label>
+                <select class="selectpicker from-control" id="fule" name="fule" required="1">
+                  {% for y in fule %}
+                  <option value="{{y}}">{{y}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-10 from-group" style="text-align: center;">
+                <label><b>select  seat</b></label>
+                <select class="selectpicker from-control" id="seat" name="seat" required="1">
+                  {% for y in seat %}
+                  <option value="{{y}}">{{y}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-10 from-group" style="text-align: center;">
+                <label><b>select  kms_driven</b></label>
+                <input class="from-control" type="text" id="kms_driven" placeholder="Enter no. of kilomiler travel">
+              </div>
+
+              <div class="col-10 from-group" style="text-align: center;">
+                <label><b>select  ownsership</b></label>
+                <select class="selectpicker from-control" id="ownsership" name="ownsership" required="1">
+                  {% for y in ownsership %}
+                  <option value="{{y}}">{{y}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-10 from-group" style="text-align: center;">
+                <label><b>select  transmission</b></label>
+                <select class="selectpicker from-control" id="transmission" name="transmission" required="1">
+                  {% for y in transmission %}
+                  <option value="{{y}}">{{y}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-10 from-group" style="text-align: center;">
+                <label><b>select  mileage</b></label>
+                <select class="selectpicker from-control" id="mileage" name="mileage" required="1">
+                  {% for y in mileage %}
+                  <option value="{{y}}">{{y}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-10 from-group" style="text-align: center;">
+                <label><b>select  engine</b></label>
+                <select class="selectpicker from-control" id="engine" name="engine" required="1">
+                  {% for y in engine %}
+                  <option value="{{y}}">{{y}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-10 from-group" style="text-align: center;">
+                <label><b>select  torque</b></label>
+                <select class="selectpicker from-control" id="torque" name="torque" required="1">
+                  {% for y in torque %}
+                  <option value="{{y}}">{{y}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              
+              <div class="col-10 from-group" style="text-align: center;">
+              <button class="btn btn-primary from-control" onclick="send_data()">predict price</button>
+              </div>
+            </form>
+
+            <br>
+            <div class="row">
+              <div class="col-12" style="text-align: center;"><h3><span id="prediction"></span></h3></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function from_hendler(event)
+      {
+        event.preventDefult();
+      }
+
+
+      function send_data()
+      {
+        document.querySelector('from').addEventListener('submit',from_hendler);
+        var fd= new FormData(document.querySelector('from'));
+        var xhr= new XMLHttpRequest();
+        xhr.open('POST','/predict',true);
+        document.getElementById("prediction").innerHTML="Wait please";
+        xhr.onreadystatechange=function()
+        {
+          if(xhr.readyState==XMLHttpRequest.DONE){
+            document.getElementById("prediction").innerHTML="prediction: "+xhr.responseText;
+          }
+        }
+        xhr.onload=function(){};
+        xhr.send(fd);
+      }
+
+    </script>
+
+  
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+     
+
+    </script>
+  </body>
+</html>
